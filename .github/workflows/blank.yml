@@ -1,0 +1,49 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Dagger PR test
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on a pull request event
+  pull_request:
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "dagger"
+  dagger:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      - name: Install Dagger
+        uses: dagger/dagger-action@v1
+        with:
+          install-only: true
+          
+      #- name: Show Dagger version
+        #run: dagger version
+        
+      - name: Setup dagger environment "myenv"
+        run: |
+          dagger init
+          #dagger mkdir -p ./myenv #directory already exists in checkout
+          dagger new myenv -p ./myenv
+        
+      - name: Pass PR number to Dagger
+        run: dagger input text prID "$GITHUB_PR_ID" -e myenv
+        
+      - name: List Dagger inputs
+        run: dagger input list -e myenv
+        
+      - name: Dagger up!
+        run: dagger up -e myenv
+        
+      - name: List Dagger outputs
+        run: dagger opuput list -e myenv
