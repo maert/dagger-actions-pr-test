@@ -37,7 +37,7 @@ jobs:
           dagger new myenv -p ./myenv
         
       - name: Pass PR number to Dagger
-        run: dagger input text prID "$GITHUB_PR_ID" -e myenv
+        run: dagger input text prID ${{github.event.number}} -e myenv
         
       - name: List Dagger inputs
         run: dagger input list -e myenv
