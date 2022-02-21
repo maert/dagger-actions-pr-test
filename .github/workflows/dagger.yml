@@ -24,13 +24,13 @@ jobs:
         with:
           install-only: true
           
-      #- name: Show Dagger version
-        #run: dagger version
+      # - name: Show Dagger version
+        # run: dagger version
         
       - name: Setup dagger environment "myenv"
         run: |
           dagger init
-          #dagger mkdir -p ./myenv #directory already exists in checkout
+          # dagger mkdir -p ./myenv #directory already exists in checkout
           dagger new myenv -p ./myenv
         
       - name: Pass PR number to Dagger
