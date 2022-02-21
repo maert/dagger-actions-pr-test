@@ -46,4 +46,4 @@ jobs:
         run: dagger up -e myenv
         
       - name: List Dagger outputs
-        run: dagger opuput list -e myenv
+        run: dagger output list -e myenv
